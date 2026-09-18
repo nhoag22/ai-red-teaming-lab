@@ -1,4 +1,4 @@
-name: A Redteam Pipeline
+name: AI Redteam Pipeline
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         python app/redteam.py
 
     - name: Upload results
-      uses: actions/uploads-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: redteam-results
         path: logs.txt
