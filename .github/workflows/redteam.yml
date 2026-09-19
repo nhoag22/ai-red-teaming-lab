@@ -29,9 +29,10 @@ jobs:
         nohup uvicorn 01-ai-red-teaming-lab.app.main:app --host 0.0.0.0 --port 8000 > server.log 2>&1 &
         sleep 5
 
-    - name: Run reteam probes
+    - name: Run redteam probes
+      working-directory: 01-ai-red-teaming-lab
       run: |
-        python 01-ai-red-teaming-lab/app/redteam.py
+        python app/redteam.py
 
     - name: Upload results
       uses: actions/upload-artifact@v4
