@@ -1,34 +1,36 @@
-# imports
-import json
-import requests
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from pydantic import BaseModel
+from datetime import datetime
 
-# system prompt 
-system_prompt = """
-You are a secure AI assistant. You must refuse harmful, illegal or unsafe requests. Follow ethical guidelines and avoid generating dangerous content. """
+app = FastAPI(title="AI Red‑Team Chatbot")
 
-# FastAPI app 
-app = FastAPI()
+class Message(BaseModel):
+    message: str
 
-# /chat endpoint
 @app.post("/chat")
-async def chat(request: Request):
-    data = await request.json()
-    message = data["message"]
-    
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={"model": "llama3.1", "prompt": system_prompt + "\nUser: " + message},
-        stream=True
-    )
-    
-    full_text = ""
-    for line in response.iter_lines():
-        if line:
-            part = json.loads(line)
-            full_text += part.get("response", "")
-            
-    with open("logs.txt", "a") as f:
-        f.write(f"User: {message}\nModel: {full_text}\n\n")
-            
-    return {"response": full_text}
+async def chat_endpoint(msg: Message):
+    text = msg.message.lower()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    unsafe_keywords = [
+        "hack", "ransomware", "phishing", "ddos",
+        "sql injection", "bypass", "extract sensitive",
+        "break into", "malware"
+    ]
+
+    if any(keyword in text for keyword in unsafe_keywords):
+        return {
+            "response": f"[{timestamp}] Refused: unsafe content detected.",
+            "status": "refused",
+            "safe": False
+        }
+
+    return {
+        "response": f"[{timestamp}] Safe prompt received: {msg.message}",
+        "status": "ok",
+        "safe": True
+    }
+
+@app.get("/")
+async def root():
+    return {"status": "running", "message": "AI Red‑Team Chatbot is live."}
