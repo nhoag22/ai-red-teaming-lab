@@ -38,4 +38,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: redteam-results
-        path: 01-ai-red-teaming-lab/results/
+        path: 01-ai-red-teaming-lab/results/**/*
