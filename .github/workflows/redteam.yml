@@ -24,3 +24,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install fastapi uvicorn requests
 
+    - name: Start FastAPI server
+      run: |
+        nohup uvicorn 01-ai-red-teaming-lab.app.main:app --host 0.0.0.0 --port 8000
+        sleep 5
+
+    - name: Run reteam probes
+      run: |
+        python 01-ai-red-teaming-lab/app/redteam.py
+
+    - name: Upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: redteam-results
+        path: 01-ai-red-teaming-lab/results/
