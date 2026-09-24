@@ -1,0 +1,35 @@
+name: Red Team Testing
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  redteam:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3,11"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Start FastAPI
+      run: |
+        nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+        sleep 5
+
+    - name: Run Red Team Tests
+      run: python redteam.py
+
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: redteam-results
+        path: results/
