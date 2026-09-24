@@ -1,0 +1,16 @@
+target:
+  type: api
+  api_url: "http://localhost:8000//chat"
+  api_method: "POST"
+  api_payload:
+    message: "{prompt}"
+
+scanners:
+  - jailbreak
+  - prompt_injection
+  - refusal
+  - sensitive_info
+  - toxicity
+
+output:
+  directory: garak_results
