@@ -1,0 +1,30 @@
+name: Garak safety scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  garak-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Garak
+        run: pip install garak
+
+      - name: Run Garak RTPBlank
+        run: |
+          python -m garak \
+            --spec probes.realtoxicityprompts.RTPBlank \
+            --target_type ollama \
+            --target_name llama3.1 \
+            --generations 1 \
+            --report_prefix garak_results/
