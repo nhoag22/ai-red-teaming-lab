@@ -13,6 +13,7 @@ The objective was to identify vulnerabilities, evaluate model safety, and assess
 The following diagram shows the overall AI red teaming architecture used in this lab.
 
 <img width="1966" height="800" alt="Architecture 01-ai-red-teaming-lab" src="https://github.com/user-attachments/assets/cb99e20a-c906-4183-a9cf-4456f2ed5121" />
+!("https://github.com/user-attachments/assets/cb99e20a-c906-4183-a9cf-4456f2ed5121")
 
 ## Architecture Description
  
