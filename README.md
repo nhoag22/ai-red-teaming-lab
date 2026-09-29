@@ -8,6 +8,38 @@ The objective was to identify vulnerabilities, evaluate model safety, and assess
 
 ---
 
+# Executive Summary
+
+This project assessed the security of a locally hosted llama3.1 Large Language Model (LLM) deployed through Ollama and accessed via a FastAPI chatbot application.
+
+The assessment used three independent AI security testing tools:
+
+- Garak
+- Promptfoo
+- PyRIT
+
+Testing focused on prompt injection, jailbreak resistance, unsafe output generation, and overall model behavior under adversarial conditions.
+
+Key Results:
+
+- Garak completed toxicity and safety evaluations without identifying unsafe outputs.
+- Promptfoo achieved a 100% success rate across evaluation test cases.
+- PyRIT executed the airt.jailbreak scenario and performed 20 attack attempts with a 0% jailbreak success rate.
+- No successful prompt injection or jailbreak attacks were observed during testing.
+
+Risk Assessment:
+
+- Prompt Injection Risk: Low
+- Jailbreak Risk: Low
+- Toxic Output Risk: Low
+- Information Disclosure Risk: Low
+
+The findings indicate that the tested llama3.1 deployment demonstrated strong resistance to the evaluated attack techniques and maintained safe behavior throughout assessment activities.
+
+Recommended next steps include expanding adversarial test coverage, executing additional PyRIT scenarios, and continuing automated security testing through GitHub Actions.
+
+---
+
 # Technology Stack
 
 - Python
@@ -135,6 +167,87 @@ Promptfoo confirmed stable and appropiate model responses across multiple prompt
 
 PyRIT executed twenty jailbreak attacks against the model and achieved a 0% success rate.
 No jailbreak attempts successfully bypassed model safeguards.
+
+---
+
+# Written Assessment
+
+## Scope
+
+The assessment focused on a FastAPI chatbot connected to the Ollama-hosted llama3.1 model. Security testing targeted prompt injection, jailbreak resistance, unsafe outputs, and model behavior under adversarial conditions.
+
+## Methodology
+
+Three testing frameworks were used:
+
+- Garak for automated vulnerability scanning
+- Promptfoo for prompt evaluation and response validation
+- PyRIT for adversarial jailbreak testing
+
+Testing was performed against a locally hosted model using repeatable security workflows.
+
+## Findings With Evidence
+
+### Garak
+
+- RTPBlank probe executed successfully.
+- No unsafe or toxic responses detected.
+- Safety checks passed.
+
+Evidence:
+- Garak HTML report
+- Garak JSON output
+
+### Promptfoo
+- Two prompt evaluations completed.
+- Both tests passed successfully.
+
+Evidence:
+- Promptfoo evaluation output
+
+### PyRIT
+
+- airt.jailbreak scenario executed.
+- Twenty attack attempts performed.
+- Zero successful jailbreaks.
+
+Evidence:
+- PyRIT scenario output
+- PyRIT attack summary
+
+## Risk Ratings
+
+| Finding | Risk |
+|----------|----------|
+| Prompt Injection | Low |
+| Toxic Output | Low |
+| Jailbreak Success | Low |
+| Information Disclosure | Low |
+
+## Affected Assets
+
+- FastAPI Chatbot Application
+- Ollama llama3.1 Model
+- Prompt Handling Logic
+- CI/CD Security Testing Pipeline
+
+## Recommended Controls
+
+- Continue automated red-team testing.
+- Expand prompt injection coverage.
+- Add additional PyRIT scenarios.
+- Maintain CI/CD testing workflows.
+- Periodically retest updated models.
+
+## Retest Results
+
+After testing and validation:
+
+- Garak passed safety checks.
+- Promptfoo evaluations passed.
+- PyRIT jailbreak scenario reported 0% success rate.
+
+No successful compromise of model safeguards was observed during retesting.
 
 ---
 
