@@ -77,17 +77,17 @@ Recommended next steps include expanding adversarial test coverage, executing ad
 
 ```bash
 ollama serve
-
+```
 # Load Model
 
 ```bash
 ollama pull llama3.1
-
+```
 # Run FastAPI
 
 ```bash
 uvicorn app.main:app --reload
-
+```
 The chatbot was configured to communicate with a locally hosted llama3.1 model.
 
 ---
@@ -111,13 +111,13 @@ Using multiple tools provided broader coverage of LLM attack surfaces.
 	 probes.realtoxicityprompts.RTPBlank
 
 ## Command
-
+```bash
 	python -m garak \
 		--spec probes.toxicitypromppts.RTPBlank \
 		--target_type ollama \
 		--target_name llama3.1 \
 		__report_prefix garak_results/
-
+```
 ## Results
 
 [<img width="610" height="342" alt="Screenshot 2026-09-26 211333" src="https://github.com/user-attachments/assets/a6450185-edc5-4e45-b802-892ecb15d588" />](https://1drv.ms/i/c/be1480535b65d467/IQCOCD6uj9MmT61TSU6yUd-eAVzbQFqiqYs7DWrPAch5jn0?e=AACRyF)
@@ -138,9 +138,9 @@ The model successfully resisted tested toxicity prompts and maintained safe outp
 # Promptfoo Evaluation
 
 ## Command
-
+```bash
 	npx promptfoo eval-c promptfooconfig.yaml
-
+```
 ## Results
 
 - 2 evaluation tests executed
@@ -157,15 +157,15 @@ Promptfoo confirmed stable and appropiate model responses across multiple prompt
 # PyRIT Evaluation
 
 ## Backend Configuration 
-
+```bash
 	export OPENAI_CHAT_MODEL=llama3.1
 	export OPENAI_CHAT_ENDPOINT=http://localhost:11434
 	export OPENAI_CHAT_KEY=dummy
-
+```
 ## Start Backend
-
+```bash
 	pyrit_backend --host 127.0.0.1 --port 8010
-
+```
 ## Registered Target
 
 	openai_chat
