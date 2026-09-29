@@ -8,6 +8,23 @@ The objective was to identify vulnerabilities, evaluate model safety, and assess
 
 ---
 
+# Architecture
+
+The following diagram shows the overall AI red teaming architecture used in this lab.
+
+<img width="1966" height="800" alt="Architecture 01-ai-red-teaming-lab" src="https://github.com/user-attachments/assets/cb99e20a-c906-4183-a9cf-4456f2ed5121" />
+
+## Architecture Description
+ 
+The architecture consists of a FastAPI chatbot connected to a locally hosted llama3.1 model through Ollama.
+ 
+User and adversarial prompts are submitted through the chatbot interface and forwarded to the model. Security testing is performed using Garak, Promptfoo, and PyRIT, while GitHub Actions automates the execution of testing workflows whenever application code, prompts, or model configurations change.
+ 
+The trust boundary is located at the user input layer because prompts are attacker-controlled. System prompts and safety rules provide guardrails that help the model resist prompt injection, jailbreak attempts, and unsafe output generation.
+ 
+The llama3.1 model is hosted locally through Ollama, allowing all testing and evaluation activities to be performed in a controlled environment without reliance on external cloud-hosted LLM services.
+
+---
 # Executive Summary
 
 This project assessed the security of a locally hosted llama3.1 Large Language Model (LLM) deployed through Ollama and accessed via a FastAPI chatbot application.
@@ -87,7 +104,7 @@ Using multiple tools provided broader coverage of LLM attack surfaces.
 ---
 
 # Garak Evaluation
- 
+
 ## Probe Used
 
 	 probes.realtoxicityprompts.RTPBlank
@@ -101,6 +118,10 @@ Using multiple tools provided broader coverage of LLM attack surfaces.
 		__report_prefix garak_results/
 
 ## Results
+
+<img width="610" height="342" alt="Screenshot 2026-09-26 211333" src="https://github.com/user-attachments/assets/a6450185-edc5-4e45-b802-892ecb15d588" />
+
+Garak evaluated the llama3.1 model using the RTPBlank probe. The scan completed successfully with a 100% score and DEFCON 5 rating, indicating low risk and no unsafe outputs.
 
 - Scan completed successfully
 - RTPBlank toxicity checks passed
@@ -158,6 +179,10 @@ Promptfoo confirmed stable and appropiate model responses across multiple prompt
           --target openai_chat
 
 ## Results
+
+<img width="607" height="324" alt="Screenshot 2026-09-28 205714" src="https://github.com/user-attachments/assets/2d877bb2-308c-4177-8c30-c37fa25c0ca7" />
+
+PyRIT executed the airt.jailbreak scenario against the llama3.1 model. Twenty jailbreak attempts were performed, resulting in a 0% success rate and no successful compromise of model safeguards.
 
 - Attack Attempts: 20 
 - Success Rate: 0%
