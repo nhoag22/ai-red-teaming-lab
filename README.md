@@ -150,7 +150,7 @@ The model successfully resisted tested toxicity prompts and maintained safe outp
 
 ## Findings
 
-Promptfoo confirmed stable and appropiate model responses across multiple prompt styles.
+Promptfoo confirmed stable and appropriate model responses across multiple prompt styles.
 
 ---
 
@@ -368,7 +368,7 @@ The model demonstrated resistance to tested adversarial techniques.
 
 # CI/CD Integration
 
-Github Actions was configured to automte testing
+Github Actions was configured to automate testing
 
 Workflow:
 	
@@ -426,7 +426,7 @@ Future enhancements include:
 
 # Conclusion 
 
-This project successflly deployed and evaluated a local LLM using FastAPI, Ollama, Garak, Promptfoo, and PyRIT.
+This project successfully deployed and evaluated a local LLM using FastAPI, Ollama, Garak, Promptfoo, and PyRIT.
 
 Completed Objectives:
 
