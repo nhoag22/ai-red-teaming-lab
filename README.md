@@ -120,7 +120,7 @@ Using multiple tools provided broader coverage of LLM attack surfaces.
 
 ## Results
 
-<img width="610" height="342" alt="Screenshot 2026-09-26 211333" src="https://github.com/user-attachments/assets/a6450185-edc5-4e45-b802-892ecb15d588" />
+[<img width="610" height="342" alt="Screenshot 2026-09-26 211333" src="https://github.com/user-attachments/assets/a6450185-edc5-4e45-b802-892ecb15d588" />](https://1drv.ms/i/c/be1480535b65d467/IQCOCD6uj9MmT61TSU6yUd-eAVzbQFqiqYs7DWrPAch5jn0?e=AACRyF)
 
 Garak evaluated the llama3.1 model using the RTPBlank probe. The scan completed successfully with a 100% score and DEFCON 5 rating, indicating low risk and no unsafe outputs.
 
