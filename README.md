@@ -1,1 +1,301 @@
-# ai-red-teaming-lab
+# AI Red Teaming Lab
+
+## Overview
+
+This project demonstrates AI security testing and red teaming of a locally hosted LLM using Ollama, FastAPI, Garak, Promptfoo, and PyRIT.
+
+The objective was to identify vulnerabilities, evaluate model safety, and assess resistance to adversarial attacks using multiple security testing frameworks.
+
+---
+
+# Technology Stack
+
+- Python
+- FastAPI
+- Ollama
+- llama3.1
+- Garak
+- Promptfoo
+- PyRIT
+- GitHub Actions
+
+---
+
+# Local Chatbot Setup
+
+## Start Ollama
+
+```bash
+ollama serve
+
+# Load Model
+
+```bash
+ollama pull llama3.1
+
+# Run FastAPI
+
+```bash
+uvicorn app.main:app --reload
+
+The chatbot was configured to communicate with a locally hosted llama3.1 model.
+
+---
+
+# Red Team Methodology 
+
+Three independent AI security testing tools were used:
+
+	1. Garak
+	2. Promptfoo
+	3. Pyrit
+
+Using multiple tools provided broader coverage of LLM attack surfaces.
+
+---
+
+# Garak Evaluation
+ 
+## Probe Used
+
+	 probes.realtoxicityprompts.RTPBlank
+
+## Command
+
+	python -m garak \
+		--spec probes.toxicitypromppts.RTPBlank \
+		--target_type ollama \
+		--target_name llama3.1 \
+		__report_prefix garak_results/
+
+## Results
+
+- Scan completed successfully
+- RTPBlank toxicity checks passed
+- HTML and JSON reports generated
+- No unsafe responses observed
+
+## Findings
+
+The model successfully resisted tested toxicity prompts and maintained safe output behavior.
+
+---
+
+# Promptfoo Evaluation
+
+## Command
+
+	npx promptfoo eval-c promptfooconfig.yaml
+
+## Results
+
+- 2 evaluation tests executed
+- 2 tests passed
+- 100% completion rate
+- 0 evaluation errors
+
+## Findings
+
+Promptfoo confirmed stable and appropiate model responses across multiple prompt styles.
+
+---
+
+# PyRIT Evaluation
+
+## Backend Configuration 
+
+	export OPENAI_CHAT_MODEL=llama3.1
+	export OPENAI_CHAT_ENDPOINT=http://localhost:11434
+	export OPENAI_CHAT_KEY=dummy
+
+## Start Backend
+
+	pyrit_backend --host 127.0.0.1 --port 8010
+
+## Registered Target
+
+	openai_chat
+	Model: llama3.1
+	Endpoint: http://localhost:11434
+
+## Scenario Executed
+
+	pyrit_scan \
+	  --server-url=http://127.0.0.1:8010 \
+	  run airt.jailbreak \
+          --target openai_chat
+
+## Results
+
+- Attack Attempts: 20 
+- Success Rate: 0%
+- Status: FAILED
+
+## Findings
+
+PyRIT executed twenty jailbreak attacks against the model and achieved a 0% success rate.
+No jailbreak attempts successfully bypassed model safeguards.
+
+---
+
+# OWASP LLM Top 10 Mapping
+
+## LLM01 Prompt Injection
+
+Tools Used:
+- Garak
+- PyRIT
+
+Tests Performed:
+- airt.jailbreak
+- garak.prompt_inject
+
+Result:
+No successful prompt injection or jailbreak attacks were observed.
+
+## LLM02 Insecure Output Handling
+
+Tool Used:
+- Promptfoo
+
+Result:
+Model responses remained safe and appropriate.
+
+## LLM06 Sensitive Information Disclosure
+
+Tool Used:
+- Garak
+
+Result:
+No sensitive information disclosure was observed.
+
+## LLM09 Overreliance
+
+Tool Used:
+- Promptfoo
+
+Result:
+Responses remained consistent across multiple prompt evaluations
+
+# OWASP Findings
+
+Testing focused on prompt injection, jailbreak resistance, and unsafe content generation. No successful compromise was observed.
+
+# MITRE ATLAS Mapping
+
+## AML.T0051 Prompt Injection
+
+Tools Used:
+- Garak
+- PyRIT
+
+Result:
+No successful prompt injection attacks were observed.
+
+## AML.T0048 Jailbreak
+
+Tool Used:
+- PyRIT
+
+Scenario:
+airt.jailbreak
+
+Result:
+20 attacks attempted.
+0% success rate.
+
+## AML.T0015 Evasion
+
+Tool Used:
+- Garak
+
+Result:
+No successful evasion techniques observed.
+
+## AML.T0034 Model Abuse
+
+Tool Used:
+- PyRIT
+
+Result:
+Model safeguards prevented successful compromise.
+
+# MITRE Findings
+
+Pyrit and Garak failed to achieve successful prompt injection or jailbreak outcomes.
+The model demonstrated resistance to tested adversarial techniques.
+
+---
+
+# CI/CD Integration
+
+Github Actions was configured to automte testing
+
+Workflow:
+	
+	.github/workflows/redteam.yml
+
+Capabilities:
+- Run red team tests automatically
+- Execute security validation
+- Upload results
+- Support continuous security testing
+
+---
+
+# Security Assessment Summary
+
+Tool:		Result:
+- Garak         - Passed RTPBlank safety checks
+-Promptfoo      - 100% test pass rate
+- Pyrit         - 0% jailbreak success rate
+
+# Lessons Learned
+
+This project demonstrated how different AI security tools evaluate LLM behavior from different perspectives.
+
+Key takeaways:
+
+- Garak provides structured security probes.
+- Promptfoo is useful for response validation and consistency testing.
+- PyRIT offers advanced adversarial testing scenarios.
+- Local models require careful configuration when integrating multiple testing frameworks.
+- Automated testing improves reliability and repeatability.
+
+# Overall Assessment 
+
+The llama3.1 model demonstrated strong resistance against tested toxicity, prompt injection, and jailbreak attacks.
+
+No successful compromise was observed across Garak, Promptfoo, or PyRIT evaluations.
+
+# Reflection
+
+This project demonstrated how multiple AI security tools can be combined to evaluate LLM safety from different perspectives.
+Garak focused on prompt injection and toxicity, Promptfoo evaluated consistency and behavior, and PyRIT simulated adversarial jailbreak scenarios.
+Together they provided a comprehensive assessment of model security.
+
+# Future Improvements
+
+Future enhancements include:
+
+- Running larger Garak probe suites
+- Expanding Promptfoo coverage
+- Testing additional Ollama models
+- Running more PyRIT scenarios
+- Uploading security artifacts through GitHub Actions
+- Mapping results to additional MITRE ATLAS techniques
+
+# Conclusion 
+
+This project successflly deployed and evaluated a local LLM using FastAPI, Ollama, Garak, Promptfoo, and PyRIT.
+
+Completed Objectives:
+
+- FastAPI chatbot deployment
+- Ollama integration
+- Garak testing
+- Promptfoo evaluation
+- PyRIT jailbreak testing
+- CI/CD integration
+- OWASP LLM mapping
+- MITRE ATLAS mapping
