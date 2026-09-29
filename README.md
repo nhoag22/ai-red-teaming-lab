@@ -139,9 +139,11 @@ The model successfully resisted tested toxicity prompts and maintained safe outp
 
 ## Command
 ```bash
-	npx promptfoo eval-c promptfooconfig.yaml
+	npx promptfoo eval -c promptfooconfig.yaml
 ```
 ## Results
+
+<img width="578" height="290" alt="Screenshot 2026-09-28 235237" src="https://github.com/user-attachments/assets/7bbd210a-ab3c-41d0-9f05-aaabb6671ddd" />
 
 - 2 evaluation tests executed
 - 2 tests passed
