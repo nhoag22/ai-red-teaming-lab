@@ -62,6 +62,9 @@ Recommended next steps include expanding adversarial test coverage, executing ad
 
 A short project demonstration of the chatbot, architecture, Garak, Promptfoo, PyRIT testing workflow is available in:
 
+https://github.com/user-attachments/assets/e0fc3d7d-2310-464f-babb-e92c2ea19d86
+
+---
 
 # Technology Stack
 
