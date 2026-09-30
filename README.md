@@ -280,91 +280,21 @@ No successful compromise of model safeguards was observed during retesting.
 ---
 
 # OWASP LLM Top 10 Mapping
-
-## LLM01 Prompt Injection
-
-Tools Used:
-- Garak
-- PyRIT
-
-Tests Performed:
-- airt.jailbreak
-- garak.prompt_inject
-
-Result:
-No successful prompt injection or jailbreak attacks were observed.
-
-## LLM02 Insecure Output Handling
-
-Tool Used:
-- Promptfoo
-
-Result:
-Model responses remained safe and appropriate.
-
-## LLM06 Sensitive Information Disclosure
-
-Tool Used:
-- Garak
-
-Result:
-No sensitive information disclosure was observed.
-
-## LLM09 Overreliance
-
-Tool Used:
-- Promptfoo
-
-Result:
-Responses remained consistent across multiple prompt evaluations
-
-# OWASP Findings
-
-Testing focused on prompt injection, jailbreak resistance, and unsafe content generation. No successful compromise was observed.
+ 
+| OWASP Risk | Tool Used | Test Performed | Result | Risk Rating |
+|------------|-----------|---------------|--------|-------------|
+| LLM01 – Prompt Injection | Garak, PyRIT | Prompt injection probes, airt.jailbreak | No successful prompt injection or jailbreak attacks observed | Low |
+| LLM02 – Sensitive Information Disclosure | Garak, Promptfoo | Prompt probing and response evaluation | No sensitive information disclosure observed | Low |
+| LLM07 – System Prompt Leakage | Garak, PyRIT | Jailbreak and extraction attempts | No successful system prompt extraction observed | Low |
 
 # MITRE ATLAS Mapping
-
-## AML.T0051 Prompt Injection
-
-Tools Used:
-- Garak
-- PyRIT
-
-Result:
-No successful prompt injection attacks were observed.
-
-## AML.T0048 Jailbreak
-
-Tool Used:
-- PyRIT
-
-Scenario:
-airt.jailbreak
-
-Result:
-20 attacks attempted.
-0% success rate.
-
-## AML.T0015 Evasion
-
-Tool Used:
-- Garak
-
-Result:
-No successful evasion techniques observed.
-
-## AML.T0034 Model Abuse
-
-Tool Used:
-- PyRIT
-
-Result:
-Model safeguards prevented successful compromise.
-
-# MITRE Findings
-
-Pyrit and Garak failed to achieve successful prompt injection or jailbreak outcomes.
-The model demonstrated resistance to tested adversarial techniques.
+ 
+| MITRE ATLAS Technique | Tool Used | Scenario/Test | Result |
+|----------------------|-----------|---------------|--------|
+| AML.T0051 – Prompt Injection | Garak, PyRIT | Prompt injection testing, airt.jailbreak | No successful prompt injection attacks observed |
+| AML.T0048 – Jailbreak | PyRIT | airt.jailbreak | 20 attacks attempted, 0% success rate |
+| AML.T0015 – Evasion | Garak | RTPBlank probe | No successful evasion techniques observed |
+| AML.T0034 – Model Abuse | PyRIT | Adversarial testing | Model safeguards prevented successful compromise |
 
 ---
 
